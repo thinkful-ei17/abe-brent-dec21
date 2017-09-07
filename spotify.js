@@ -3,8 +3,9 @@
 const CLIENT_ID = 'YOUR_ID_HERE';
 
 const getFromApi = function (endpoint, query = {}) {
-  // You won't need to change anything in this function, but you will use this function to make
-  // calls to Spotify's API.
+  // You won't need to change anything in this function, but you will use this function 
+  // to make calls to Spotify's different API endpoints. Pay close attention to this 
+  // function's two parameters.
 
   const url = new URL(`https://api.spotify.com/v1/${endpoint}`);
   const headers = new Headers();
@@ -26,6 +27,8 @@ const getFromApi = function (endpoint, query = {}) {
 let artist;
 
 const getArtist = function (name) {
+  // Edit me!
+  // (Plan to call `getFromApi()` several times over the whole exercise from here!)
 };
 
 
