@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p class="message">
+    You are being logged in... <a href="/">Click here</a> if you are not automatically redirected.
+  </p>
+
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script>
+    const getAndSetAccessToken = function () {
+      const currentUrl = new URL(window.location.href);
+      const accessToken = new URLSearchParams(currentUrl.hash.slice(1)).get('access_token');
+
+      if (!accessToken) {
+        $('.message').html('<p>There was an error! Please <a href="/">return to homepage</a> and try again.');
+        return;
+      }
+
+      localStorage.setItem('SPOTIFY_ACCESS_TOKEN', accessToken);
+      localStorage.setItem('SPOTIFY_EXPIRATION', new Date().getTime() + 3600000);
+      window.location = '/';
+    };
+
+    $(() => {
+      getAndSetAccessToken();
+    })
+  </script>
+</body>
+</html>
