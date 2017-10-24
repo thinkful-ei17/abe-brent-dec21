@@ -1,6 +1,4 @@
-// !!!FILL IN YOUR CLIENT ID FROM YOUR APPLICATION CONSOLE:
-// https://developer.spotify.com/my-applications/#!/applications !!!
-const CLIENT_ID = 'YOUR_ID_HERE';
+const CLIENT_ID = 'eb6dfffda5534bb5996e872487be4321';
 
 const getFromApi = function (endpoint, query = {}) {
   // You won't need to change anything in this function, but you will use this function 
