@@ -55,17 +55,29 @@ const getArtist = function (name) {
     type: 'artist',
     limit: 1
   };
+  
+  const headers = new Headers();
+  headers.set('Authorization', `Bearer ${localStorage.getItem('SPOTIFY_ACCESS_TOKEN')}`);
+  headers.set('Content-Type', 'application/json');
+  const requestObject = {
+    headers
+  };
+
   console.log(getFromApi('search', searchParams));
  
   return getFromApi( 'search', searchParams)
     .then(response => {
       artist = response.artists.items[0];
-      // console.log(artist);
-      // return artist;
-      // return request to related-artist endpoint
+     
       const url = new URL(`https://api.spotify.com/v1/artists/${artist.id}/related-artists`);
-      return fetch(url).then( response =>{
-        console.log(response);
+      return fetch(url,requestObject).then( item =>{
+        let newItems = item.json();
+        artist.related = newItems.artists;
+        console.log(newItems);
+        console.log(newItems.artists);
+        console.log(artist.related);
+        console.log(artist);
+        return artist;
       });
     })
     .catch(err => {
@@ -76,7 +88,10 @@ const getArtist = function (name) {
 // Endpoint to fetch related artists
 // https://api.spotify.com/v1/artists/{id}/related-artists
 
-
+// Inside the callback you should:
+// Set artist.related to item.artists, where item is the object returned by the get related artists endpoint.
+// Return the artist object.
+// Try searching for an artist again.You should now see a list of related artists also being displayed.
 
 
 // =========================================================================================================
