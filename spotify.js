@@ -56,33 +56,31 @@ const getArtist = function (name) {
     limit: 1
   };
   
-  const headers = new Headers();
-  headers.set('Authorization', `Bearer ${localStorage.getItem('SPOTIFY_ACCESS_TOKEN')}`);
-  headers.set('Content-Type', 'application/json');
-  const requestObject = {
-    headers
-  };
-
-  console.log(getFromApi('search', searchParams));
- 
+  /**
+   * Returns a single Artist 
+   */
   return getFromApi( 'search', searchParams)
+    //  
     .then(response => {
       artist = response.artists.items[0];
-     
-      const url = new URL(`https://api.spotify.com/v1/artists/${artist.id}/related-artists`);
-      return fetch(url,requestObject).then( item =>{
-        let newItems = item.json();
-        artist.related = newItems.artists;
-        console.log(newItems);
-        console.log(newItems.artists);
-        console.log(artist.related);
-        console.log(artist);
-        return artist;
-      });
+      return getFromApi(`artists/${artist.id}/related-artists`)
     })
-    .catch(err => {
+   .then( response => {
+          artist.related = response.artists;
+        const promises = [];
+             artist.related.forEach(a => promises.push(getFromApi(`artists/${a.id}/top-tracks`, { country: 'US' })));
+            return Promise.all(promises)
+        })
+    .then(tracks => {
+      tracks.forEach((t, i) => {
+        artist.related[i].tracks = t.tracks;
+      })
+      console.log(artist);
+      return artist;
+    })
+   .catch(err => {
       console.error(`Fail Report: ===> ${err}`);
-    });
+   });
 };
 
 // Endpoint to fetch related artists
