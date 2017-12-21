@@ -1,3 +1,31 @@
+'use strict';
+
+// You will be responsible for filling in the getArtist function below it.Update this function to:
+
+//   Make a call to the search endpoint using the getFromApi function.
+// The query parameter should contain the following information:
+
+// {
+//   q: name,
+//     limit: 1,
+//       type: 'artist'
+// }
+// Use.then to add a callback which will run when getFromApi resolves.
+
+// Inside the callback you should:
+
+// Set the artist global to be equal to item.artists.items[0], where item is the information obtained from the API(which will be passed as the first argument to your callback).
+// Return the artist object.
+// Return the promise which you created by calling getFromApi.
+
+// Open up index.html and try running a search.You should see that an artist who matches your search term is added below the search bar.
+
+// .then(response => {
+//   artist = response.artists.items[0];
+//   console.log(artist);
+
+
+
 const CLIENT_ID = 'eb6dfffda5534bb5996e872487be4321';
 
 const getFromApi = function (endpoint, query = {}) {
@@ -25,9 +53,36 @@ const getFromApi = function (endpoint, query = {}) {
 let artist;
 
 const getArtist = function (name) {
-  // Edit me!
-  // (Plan to call `getFromApi()` several times over the whole exercise from here!)
+  let searchParams = {
+    q: name,
+    type: 'artist',
+    limit: 1
+  };
+  const myPromise = new Promise((resolve, reject) => {
+   try {
+     getFromApi(( 'search', searchParams ) => {
+       resolve()
+     }
+  
+      
+
+
+    })
+ 
 };
+const myPromise = new Promise((resolve, reject) => {
+  try {
+    setTimeout(() => {
+      // log here so we can see when this actually executes
+      console.log(`${order}: myPromise\'s async work executing`),
+        // resolve with a value that we can access in a `.then` block below
+        resolve('Surprise!');
+    }, 3000);
+    // if anything goes wrong, we'll reject, returning the error
+  } catch (err) {
+    reject(err);
+  }
+});
 
 
 
