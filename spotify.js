@@ -62,6 +62,9 @@ const getArtist = function (name) {
     .then(response => {
       artist = response.artists.items[0];
       return artist;
+    })
+    .catch(err => {
+      console.log(err.message);
     });
     
 };
