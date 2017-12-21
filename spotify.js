@@ -57,18 +57,24 @@ const getArtist = function (name) {
   };
   console.log(getFromApi('search', searchParams));
  
-
   return getFromApi( 'search', searchParams)
     .then(response => {
       artist = response.artists.items[0];
-      return artist;
+      // console.log(artist);
+      // return artist;
+      // return request to related-artist endpoint
+      const url = new URL(`https://api.spotify.com/v1/artists/${artist.id}/related-artists`);
+      return fetch(url).then( response =>{
+        console.log(response);
+      });
     })
     .catch(err => {
-      console.log(err.message);
+      console.error(`Fail Report: ===> ${err}`);
     });
-    
 };
 
+// Endpoint to fetch related artists
+// https://api.spotify.com/v1/artists/{id}/related-artists
 
 
 
