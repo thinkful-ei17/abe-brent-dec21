@@ -1,4 +1,5 @@
 'use strict';
+/* global $ */
 
 // You will be responsible for filling in the getArtist function below it.Update this function to:
 
@@ -19,10 +20,6 @@
 // Return the promise which you created by calling getFromApi.
 
 // Open up index.html and try running a search.You should see that an artist who matches your search term is added below the search bar.
-
-// .then(response => {
-//   artist = response.artists.items[0];
-//   console.log(artist);
 
 
 
@@ -58,31 +55,16 @@ const getArtist = function (name) {
     type: 'artist',
     limit: 1
   };
-  const myPromise = new Promise((resolve, reject) => {
-   try {
-     getFromApi(( 'search', searchParams ) => {
-       resolve()
-     }
-  
-      
-
-
-    })
+  console.log(getFromApi('search', searchParams));
  
+
+  return getFromApi( 'search', searchParams)
+    .then(response => {
+      artist = response.artists.items[0];
+      return artist;
+    });
+    
 };
-const myPromise = new Promise((resolve, reject) => {
-  try {
-    setTimeout(() => {
-      // log here so we can see when this actually executes
-      console.log(`${order}: myPromise\'s async work executing`),
-        // resolve with a value that we can access in a `.then` block below
-        resolve('Surprise!');
-    }, 3000);
-    // if anything goes wrong, we'll reject, returning the error
-  } catch (err) {
-    reject(err);
-  }
-});
 
 
 
